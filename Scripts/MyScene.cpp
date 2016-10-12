@@ -6,6 +6,7 @@ CScene
 	SELECT,
 	MAIN,
     MAIN1,
+	MAIN2,
 	CLEAR;
 
 int g_title;
@@ -28,9 +29,12 @@ int g_select;
 
 int g_a;
 
+int g_haikei;
+
 int g_stage[4];
 int masucolor[150][40];
 int masucolor2[200][40];
+int masucolor3[54][86];
 
 void AwakeScene()
 {
@@ -40,6 +44,7 @@ void AwakeScene()
 	TITLE.input.AddEventListener(Event.EVERY_FRAME,DrawGameTitle);
 	MAIN.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain);
 	MAIN1.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain1);
+	MAIN2.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain2);
 	//STAGE2.input.AddEventListener(Event.EVERY_FRAME,DrawGameStage2);
 	SELECT.input.AddEventListener(Event.EVERY_FRAME,DrawGameSelect);
 	CLEAR.input.AddEventListener(Event.EVERY_FRAME,DrawGameClear);
@@ -64,6 +69,8 @@ void AwakeScene()
 
 	g_a = LoadGraph("pic/a.png",true);
 
+	g_haikei = LoadGraph("pic/ushiro.png",true);
+
 	g_stage[1] =LoadSoftImage("pic/Sta1.png"); 
 	int r,g,b;
 	for(int i=0;i<150;i++){
@@ -78,8 +85,17 @@ void AwakeScene()
 		for(int b=0;b<40;b++){
 			GetPixelSoftImage(g_stage[2],a,b,&r2,&g2,&b2,0);
 			masucolor2[a][b] = GetColor(r2,g2,b2);
+		}}
+
+ g_stage[3] =LoadSoftImage("pic/alpaca.png"); 
+	int r3,g3,b3;
+	for(int i2=0;i2<54;i2++){
+		for(int j2=0;j2<86;j2++){
+			GetPixelSoftImage(g_stage[3],i2,j2,&r3,&g3,&b3,0);
+			masucolor3[i2][j2] = GetColor(r3,g3,b3);
 		}
-	}
+	}	
+
 
 }
    
@@ -107,30 +123,7 @@ if(CheckHitKey(KEY_INPUT_RETURN)){
 
 
 
-//STAGE1
-//int midori_x[16] = {0,120,200,320,380,490,570,730,810,1010,1100,1220,1360,1500,1610,1760}; 
-//int midori_y[16] = {540,540,540,540,540,540,540,540,540,540,430,390,300,280,330,200};
-//const int midori_X[16] = {60,20,20,20,20,20,20,20,20,20,20,20,20,20,20,20};
-//const int midori_Y[16] = {15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15};
-//
-//int aka_x[2] = {630,910};
-//int	aka_y[2] = {510,500};
-//const int aka_X[2] = {20,20};
-//const int aka_Y[2] = {15,15};
-//
-//int falsegreenbox_x[5] = {280,350,410,630,910};
-//int	falsegreenbox_y[5] = {540,540,540,510,500};
-//
-//int a_x[5] = {100,200,300,400,500};
-//int	a_y[5] = {300,300,300,300,300};
-//#define a_w 20
-//#define a_h 15
-//
-//int mushoku_x[2] = {260,1210};
-//int	mushoku_y[2] = {390,300};
-//const int mushoku_X[2] = {20,30};
-//
-//const int mushoku_Y[2] = {15,15};
+
 
 int goal_x=2300;
 int goal_y=0;
@@ -167,6 +160,9 @@ int scr_y = 0;
 bool scr_f=false;
 bool flag=false;
 bool jump_f=false;
+bool scr_f3=false;
+bool flag3=false;
+bool jump_f3=false;
 bool scr_f2=false;
 bool flag2=false;
 bool jump_f2=false;
@@ -182,6 +178,18 @@ int y2=30;
 int vx2=0;
 int vy2=0;
 int z2=1;
+
+int goal_x3=1590;
+int goal_y3=0;
+const int jiki_X3= 30;
+const int jiki_Y3 = 60;
+int scr_x3 = 0;
+int scr_y3 = 0;
+int x3=1800;
+int y3=30;
+int vx3=0;
+int vy3=0;
+int z3=1;
 
 
 void Collision(int _box_x,int _box_y,int _box_w,int _box_h){
@@ -239,7 +247,33 @@ void Collision2(int _box_x,int _box_y,int _box_w,int _box_h){
 	
 	
 };
+void Collision3(int _box_x,int _box_y,int _box_w,int _box_h){
 
+		if(x3+vx3+jiki_X3>_box_x && x3+vx3<_box_x+_box_w && y3>_box_y-60 && y3<_box_y+_box_h && vx3>=0 ){
+		
+		x3=_box_x-jiki_X;
+		vx3=0;
+		}
+
+		if(x3+vx3+jiki_X3>_box_x+_box_w &&x3+vx3<_box_w+_box_x  && y3>_box_y-60 && y3<_box_y+_box_h  && vx3<=0){
+			x3 = _box_x + _box_w;
+			vx3=0;
+			}
+
+	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3>=_box_y-60 && y3<_box_y+_box_h && vy3>0){
+			y3 = _box_y - jiki_Y3;
+			vy3=0;
+			jump_f3=true;
+		}
+
+	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3<=_box_y+_box_h && y3>_box_y-60 && vy3<0){
+			y3 = _box_y + _box_h;
+			vy3 =0;
+		}
+	
+	
+	
+};
 
 void DrawGameSelect(){
 	 DrawGraph(0,0,g_select,true);
@@ -250,6 +284,9 @@ void DrawGameSelect(){
 
 	if(CheckHitKey(KEY_INPUT_2)){
 		GoGameMain1();
+	}
+if(CheckHitKey(KEY_INPUT_3)){
+		GoGameMain2();
 	}
 };
 
@@ -481,6 +518,115 @@ void DrawGameMain1(){
 	}
 
 };
+//sta3
+void DrawGameMain2(){
+	DrawGraph(0,0,g_haikei,true);
+
+	flag3 = false;
+
+	if(flag3 == false){
+		if(CheckHitKey(KEY_INPUT_RIGHT)){
+			vx3 += 5;
+		}
+		if(CheckHitKey(KEY_INPUT_LEFT)){
+			vx3-= 5;
+		}
+		if( jump_f3 == true){
+			if(CheckHitKey(KEY_INPUT_UP)){
+				vy3 -=14;
+				jump_f3 = false;
+			}
+		}
+	}
+
+	jump_f3 = false;
+
+	if(x3+vx3 < 0 ){
+		vx3=0;
+		x3=0;
+	}
+	
+	
+	if(y3+vy3 > 600){
+		vy3=0;
+		x3=2050;
+		vx3=0;
+		y3=150;
+		scr_x3=0;
+	}
+	
+	///
+	
+
+
+	
+	for(int i2=0;i2<54;i2++){
+		for(int j2=0;j2<86;j2++){
+			if(masucolor3[i2][j2]==BLACK){
+			Collision3(i2*220,j2*15,20,15);
+			DrawBox(i2*20-scr_x3,j2*15,i2*20+20-scr_x3,j2*15+15,BLACK,true);
+			}
+				
+		}
+	}
+
+	x3 += vx3;
+	y3 += vy3;
+	vx3=0;
+
+	if(jump_f3==false){
+		vy3+=z3;
+	}else{
+		if(vy3!=0){
+			vy3=0;
+		}
+	}
+		
+		if(x3>350&&scr_f3==false){
+		scr_x3=x3-350;
+		scr_f3=true;
+	}
+	if(x3=350){
+	scr_f3=false;
+	}
+	if(scr_f3==true){
+		scr_x3=x3-350;
+		scr_f3=true;
+	}
+	
+	
+	if(x3 >= goal_x3 -30 && y3 >= goal_y3 -60  && x3 <= goal_x3 +30 && y3 <= goal_y3 + 60){
+		x3=2050;
+		y3=150;
+		scr_x3=0;
+		flag3= true;
+	}
+	if(flag3 ==true){
+
+		GoGameClear();
+	}
+		if(CheckHitKey(KEY_INPUT_RETURN)){
+		GoGameSelect();
+		}
+		flag3 = false;
+	
+	
+	
+	DrawGraph(goal_x3-scr_x3,goal_y3,g_goal,true);
+	DrawGraph(x3-scr_x3,y3,g_person,true);	
+	DrawBox(x3-scr_x3,y3,x3+jiki_X3-scr_x3,y3+jiki_Y3,WHITE,false);
+	DrawFormatString(700,0,RED,"x:%d",x);
+	DrawFormatString(700,20,RED,"y:%d",y);
+	if(CheckHitKey(KEY_INPUT_BACK)){
+		x3=385;
+		y3=540;
+
+		vx3=0;
+		vy3=0;
+		GoGameSelect();
+	}
+
+};
 
 void GoGameTitle(){
 	
@@ -505,6 +651,13 @@ void GoGameMain1(){
 	Game.RemoveChild();
 	Game.AddChild(&MAIN1);
 }
+void GoGameMain2(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAIN2);
+}
+
+
 void GoGameClear(){
 	
 	Game.RemoveChild();
