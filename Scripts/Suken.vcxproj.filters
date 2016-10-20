@@ -112,9 +112,6 @@
     <ClInclude Include="SukenLib\Utility\Debug.h">
       <Filter>SukenLib\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="SukenLib\Utility\Utility.h">
-      <Filter>SukenLib\Utility</Filter>
-    </ClInclude>
     <ClInclude Include="SukenLib\GameEngine\Game.h">
       <Filter>SukenLib\GameEngine</Filter>
     </ClInclude>
@@ -143,5 +140,8 @@
       <Filter>SukenLib\GameEngine\Physics\Primitive</Filter>
     </ClInclude>
     <ClInclude Include="MyScene.h" />
+    <ClInclude Include="SukenLib\Utility\Utility.h">
+      <Filter>SukenLib\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

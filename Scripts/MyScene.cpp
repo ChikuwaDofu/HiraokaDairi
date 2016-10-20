@@ -49,29 +49,29 @@ void AwakeScene()
 	SELECT.input.AddEventListener(Event.EVERY_FRAME,DrawGameSelect);
 	CLEAR.input.AddEventListener(Event.EVERY_FRAME,DrawGameClear);
 
-	g_title = LoadGraph("pic/Title.png",true);
+	g_title = LoadGraph("hiraokapic/Title.png",true);
 
-	g_hake = LoadGraph("pic/Mesa.png",true);
+	g_hake = LoadGraph("hiraokapic/Mesa.png",true);
 
-	g_jiki = LoadGraph("pic/jiki.png",true);
+	g_jiki = LoadGraph("hiraokapic/jiki.png",true);
 
-	g_clear = LoadGraph("pic/Clear.png",true);
+	g_clear = LoadGraph("hiraokapic/Clear.png",true);
 
-	g_goal = LoadGraph("pic/goal.png",true);
+	g_goal = LoadGraph("hiraokapic/goal.png",true);
 
-	g_person = LoadGraph("pic/person.png",true);
+	g_person = LoadGraph("hiraokapic/person.png",true);
 
-	g_mushoku = LoadGraph("pic/mushoku.png",true);
+	g_mushoku = LoadGraph("hiraokapic/mushoku.png",true);
 
-	g_falsegreenbox = LoadGraph("pic/falsegreenbox.png",true);
+	g_falsegreenbox = LoadGraph("hiraokapic/falsegreenbox.png",true);
 
-	g_select = LoadGraph("pic/select2.png",true);
+	g_select = LoadGraph("hiraokapic/select2.png",true);
 
-	g_a = LoadGraph("pic/a.png",true);
+	g_a = LoadGraph("hiraokapic/a.png",true);
 
-	g_haikei = LoadGraph("pic/ushiro.png",true);
+	g_haikei = LoadGraph("hiraokapic/ushiro.png",true);
 
-	g_stage[1] =LoadSoftImage("pic/Sta1.png"); 
+	g_stage[1] =LoadSoftImage("hiraokapic/Sta1.png"); 
 	int r,g,b;
 	for(int i=0;i<150;i++){
 		for(int j=0;j<40;j++){
@@ -79,7 +79,7 @@ void AwakeScene()
 			masucolor[i][j] = GetColor(r,g,b);
 		}
 	}
-	 g_stage[2] =LoadSoftImage("pic/neko.png"); 
+	 g_stage[2] =LoadSoftImage("hiraokapic/neko.png"); 
 	int r2,g2,b2;
 	for(int a=0;a<200;a++){
 		for(int b=0;b<40;b++){
@@ -87,7 +87,7 @@ void AwakeScene()
 			masucolor2[a][b] = GetColor(r2,g2,b2);
 		}}
 
- g_stage[3] =LoadSoftImage("pic/alpaca.png"); 
+ g_stage[3] =LoadSoftImage("hiraokapic/alpaca.png"); 
 	int r3,g3,b3;
 	for(int i2=0;i2<54;i2++){
 		for(int j2=0;j2<86;j2++){
@@ -160,7 +160,8 @@ int scr_y = 0;
 bool scr_f=false;
 bool flag=false;
 bool jump_f=false;
-bool scr_f3=false;
+bool scr_fx3=false;
+bool scr_fy3=false;
 bool flag3=false;
 bool jump_f3=false;
 bool scr_f2=false;
@@ -185,8 +186,8 @@ const int jiki_X3= 30;
 const int jiki_Y3 = 60;
 int scr_x3 = 0;
 int scr_y3 = 0;
-int x3=1800;
-int y3=30;
+int x3=530;
+int y3=220;
 int vx3=0;
 int vy3=0;
 int z3=1;
@@ -409,6 +410,7 @@ void DrawGameMain(){
 };
 ///sta2
 void DrawGameMain1(){
+	DrawGraph(0,0,g_haikei,true);
 	flag2 = false;
 	
 
@@ -547,15 +549,17 @@ void DrawGameMain2(){
 	}
 	
 	
-	if(y3+vy3 > 600){
+	if(y3+vy3 > 1300){
 		vy3=0;
-		x3=2050;
+		x3=200;
 		vx3=0;
 		y3=150;
 		scr_x3=0;
+		scr_y3=0;
 	}
 	
-	///
+	
+	//if(690<x3+vx3<740 && y=1005){}
 	
 
 
@@ -563,16 +567,20 @@ void DrawGameMain2(){
 	for(int i2=0;i2<54;i2++){
 		for(int j2=0;j2<86;j2++){
 			if(masucolor3[i2][j2]==BLACK){
-			Collision3(i2*220,j2*15,20,15);
-			DrawBox(i2*20-scr_x3,j2*15,i2*20+20-scr_x3,j2*15+15,BLACK,true);
+			Collision3(i2*20,j2*15,20,15);
+			DrawBox(i2*20-scr_x3,j2*15-scr_y3,i2*20+20-scr_x3,j2*15+15-scr_y3,BLACK,true);
 			}
-				
-		}
+			if(masucolor3[i2][j2]==RED){
+			Collision3(i2*20,j2*15,20,15);
+			DrawBox(i2*20-scr_x3,j2*15-scr_y3,i2*20+20-scr_x3,j2*15+15-scr_y3,RED,true);
+			}
+	}
 	}
 
 	x3 += vx3;
 	y3 += vy3;
 	vx3=0;
+	
 
 	if(jump_f3==false){
 		vy3+=z3;
@@ -582,16 +590,29 @@ void DrawGameMain2(){
 		}
 	}
 		
-		if(x3>350&&scr_f3==false){
+	if(x3>350&&scr_fx3==false){
 		scr_x3=x3-350;
-		scr_f3=true;
+		scr_fx3=true;
 	}
-	if(x3=350){
-	scr_f3=false;
+	if(x3<=350){
+	scr_fx3=false;
 	}
-	if(scr_f3==true){
+	if(scr_fx3==true){
 		scr_x3=x3-350;
-		scr_f3=true;
+		scr_fx3=true;
+	} 
+
+		
+	if(y3>300&&scr_fy3==false){
+		scr_y3=y3-300;
+		scr_fy3=true;
+	}
+	if(y3<=300){
+	scr_fy3=false;
+	}
+	if(scr_fy3==true){
+	scr_y3=y3-300;
+	scr_fy3=true;
 	}
 	
 	
@@ -599,6 +620,7 @@ void DrawGameMain2(){
 		x3=2050;
 		y3=150;
 		scr_x3=0;
+		scr_y3=0;
 		flag3= true;
 	}
 	if(flag3 ==true){
@@ -612,14 +634,14 @@ void DrawGameMain2(){
 	
 	
 	
-	DrawGraph(goal_x3-scr_x3,goal_y3,g_goal,true);
-	DrawGraph(x3-scr_x3,y3,g_person,true);	
-	DrawBox(x3-scr_x3,y3,x3+jiki_X3-scr_x3,y3+jiki_Y3,WHITE,false);
-	DrawFormatString(700,0,RED,"x:%d",x);
-	DrawFormatString(700,20,RED,"y:%d",y);
+	DrawGraph(goal_x3-scr_x3,goal_y3-scr_y3,g_goal,true);
+	DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);	
+	DrawBox(x3-scr_x3,y3-scr_y3,x3+jiki_X3-scr_x3,y3+jiki_Y3-scr_y3,WHITE,false);
+	DrawFormatString(700,0,RED,"x:%d",x3);
+	DrawFormatString(700,20,RED,"y:%d",y3);
 	if(CheckHitKey(KEY_INPUT_BACK)){
-		x3=385;
-		y3=540;
+		x3=540;
+		y3=220;
 
 		vx3=0;
 		vy3=0;
