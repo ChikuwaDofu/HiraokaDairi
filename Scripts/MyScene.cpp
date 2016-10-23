@@ -5,8 +5,14 @@ CScene
 	TITLE,
 	SELECT,
 	MAIN,
-    MAIN1,
+	MAINEX,
+	MAIN1,
+    MAIN1EX,
 	MAIN2,
+	MAIN2EX,
+	MAIN3,
+	MAIN3EX,
+	ASOBI,
 	CLEAR;
 
 int g_title;
@@ -21,20 +27,26 @@ int g_goal;
 
 int g_person;
 
+int g_personl;
+
 int g_mushoku;
 
 int g_falsegreenbox;
 
 int g_select;
 
-int g_a;
-
+int g_1ex;
+int g_2ex;
+int g_3ex;
+int g_4ex;
+int g_asobikata;
 int g_haikei;
 
 int g_stage[4];
 int masucolor[150][40];
 int masucolor2[200][40];
-int masucolor3[54][86];
+int masucolor3[72][86];
+int masucolor4[962][1150];
 
 void AwakeScene()
 {
@@ -43,11 +55,16 @@ void AwakeScene()
 
 	TITLE.input.AddEventListener(Event.EVERY_FRAME,DrawGameTitle);
 	MAIN.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain);
+	MAINEX.input.AddEventListener(Event.EVERY_FRAME,DrawSta1ex);
 	MAIN1.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain1);
+    MAIN1EX.input.AddEventListener(Event.EVERY_FRAME,DrawSta2ex);
 	MAIN2.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain2);
-	//STAGE2.input.AddEventListener(Event.EVERY_FRAME,DrawGameStage2);
+	MAIN2EX.input.AddEventListener(Event.EVERY_FRAME,DrawSta3ex);
+	MAIN3.input.AddEventListener(Event.EVERY_FRAME,DrawGameMain3);
+	MAIN3EX.input.AddEventListener(Event.EVERY_FRAME,DrawSta4ex);
 	SELECT.input.AddEventListener(Event.EVERY_FRAME,DrawGameSelect);
 	CLEAR.input.AddEventListener(Event.EVERY_FRAME,DrawGameClear);
+	ASOBI.input.AddEventListener(Event.EVERY_FRAME,DrawAsobi);
 
 	g_title = LoadGraph("hiraokapic/Title.png",true);
 
@@ -61,15 +78,22 @@ void AwakeScene()
 
 	g_person = LoadGraph("hiraokapic/person.png",true);
 
+	g_personl = LoadGraph("hiraokapic/personl.png",true);
+	
 	g_mushoku = LoadGraph("hiraokapic/mushoku.png",true);
 
 	g_falsegreenbox = LoadGraph("hiraokapic/falsegreenbox.png",true);
 
 	g_select = LoadGraph("hiraokapic/select2.png",true);
 
-	g_a = LoadGraph("hiraokapic/a.png",true);
+	g_1ex = LoadGraph("hiraokapic/sta1ex.png",true);
 
+	g_2ex = LoadGraph("hiraokapic/sta2ex.png",true);
+	g_3ex = LoadGraph("hiraokapic/alpacaex.png",true);
+	g_4ex = LoadGraph("hiraokapic/gorilla.png",true);
+	g_asobikata=LoadGraph("hiraokapic/asobikata.png",true);
 	g_haikei = LoadGraph("hiraokapic/ushiro.png",true);
+
 
 	g_stage[1] =LoadSoftImage("hiraokapic/Sta1.png"); 
 	int r,g,b;
@@ -95,7 +119,14 @@ void AwakeScene()
 			masucolor3[i2][j2] = GetColor(r3,g3,b3);
 		}
 	}	
-
+g_stage[0] =LoadSoftImage("hiraokapic/gorillaaa.png"); 
+	int r4,g4,b4;
+	for(int i3=0;i3<962;i3++){
+		for(int j3=0;j3<1150;j3++){
+			GetPixelSoftImage(g_stage[0],i3,j3,&r4,&g4,&b4,0);
+			masucolor4[i3][j3] = GetColor(r4,g4,b4);
+		}
+	}	
 
 }
    
@@ -167,6 +198,10 @@ bool jump_f3=false;
 bool scr_f2=false;
 bool flag2=false;
 bool jump_f2=false;
+bool scr_fx4=false;
+bool scr_fy4=false;
+bool flag4=false;
+bool jump_f4=false;
 
 int goal_x2=1590;
 int goal_y2=0;
@@ -180,18 +215,29 @@ int vx2=0;
 int vy2=0;
 int z2=1;
 
-int goal_x3=1590;
-int goal_y3=0;
+int goal_x3=140;
+int goal_y3=390;
 const int jiki_X3= 30;
 const int jiki_Y3 = 60;
 int scr_x3 = 0;
 int scr_y3 = 0;
-int x3=530;
-int y3=220;
+int x3=815;
+int y3=1155;
 int vx3=0;
 int vy3=0;
 int z3=1;
 
+int goal_x4=140;
+int goal_y4=390;
+const int jiki_X4= 30;
+const int jiki_Y4 = 60;
+int scr_x4 = 0;
+int scr_y4 = 0;
+int x4=1800;
+int y4=450;
+int vx4=0;
+int vy4=0;
+int z4=1;
 
 void Collision(int _box_x,int _box_y,int _box_w,int _box_h){
 
@@ -252,7 +298,7 @@ void Collision3(int _box_x,int _box_y,int _box_w,int _box_h){
 
 		if(x3+vx3+jiki_X3>_box_x && x3+vx3<_box_x+_box_w && y3>_box_y-60 && y3<_box_y+_box_h && vx3>=0 ){
 		
-		x3=_box_x-jiki_X;
+		x3=_box_x-jiki_X3;
 		vx3=0;
 		}
 
@@ -275,28 +321,92 @@ void Collision3(int _box_x,int _box_y,int _box_w,int _box_h){
 	
 	
 };
+void Collision4(int _box_x,int _box_y,int _box_w,int _box_h){
 
+		if(x4+vx4+jiki_X4>_box_x && x4+vx4<_box_x+_box_w && y4>_box_y-60 && y4<_box_y+_box_h && vx4>=0 ){
+		
+		x4=_box_x-jiki_X4;
+		vx4=0;
+		}
+
+		if(x4+vx4+jiki_X4>_box_x+_box_w &&x4+vx4<_box_w+_box_x  && y4>_box_y-60 && y4<_box_y+_box_h  && vx4<=0){
+			x4 = _box_x + _box_w;
+			vx4=0;
+			}
+
+	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4>=_box_y-60 && y4<_box_y+_box_h && vy4>0){
+			y4 = _box_y - jiki_Y4;
+			vy4=0;
+			jump_f4=true;
+		}
+
+	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4<=_box_y+_box_h && y4>_box_y-60 && vy4<0){
+			y4 = _box_y + _box_h;
+			vy4 =0;
+		}
+	
+	
+	
+};
+//ステージ選択
 void DrawGameSelect(){
 	 DrawGraph(0,0,g_select,true);
 
 	if(CheckHitKey(KEY_INPUT_1)){
-		GoGameMain();
+		GoSta1ex();
 	}
 
 	if(CheckHitKey(KEY_INPUT_2)){
-		GoGameMain1();
+		GoSta2ex();
 	}
 if(CheckHitKey(KEY_INPUT_3)){
-		GoGameMain2();
+		GoSta3ex();
 	}
+if(CheckHitKey(KEY_INPUT_4)){
+		GoSta4ex();
+	}
+if(CheckHitKey(KEY_INPUT_5)){
+        GoAsobi();   
+}
 };
 
-
-
+void DrawSta1ex(){
+	DrawGraph(0,0,g_1ex,true);
+		if(CheckHitKey(KEY_INPUT_RETURN)){
+			GoGameMain();
+		}
+	};
+void DrawSta2ex(){
+	DrawGraph(0,0,g_2ex,true);
+		if(CheckHitKey(KEY_INPUT_RETURN)){
+			GoGameMain1();
+		}
+	};
+void DrawSta3ex(){
+	DrawGraph(0,0,g_3ex,true);
+		if(CheckHitKey(KEY_INPUT_RETURN)){
+			GoGameMain2();
+		}
+	};
+void DrawSta4ex(){
+	DrawGraph(0,0,g_4ex,true);
+		if(CheckHitKey(KEY_INPUT_RETURN)){
+			GoGameMain3();
+		}
+	};
+void DrawAsobi(){
+	DrawGraph(0,0,g_asobikata,true);
+	if(CheckHitKey(KEY_INPUT_RETURN)){
+			GoGameSelect();
+		}
+};
 
 //STAGE1
 void DrawGameMain(){
+	DrawBox(0,0,10000,10000,BLUE,true);
+
 	flag = false;
+
 	
 
 	
@@ -308,6 +418,7 @@ void DrawGameMain(){
 		}
 		if(CheckHitKey(KEY_INPUT_LEFT)){
 			vx -= 5;
+			
 		}
 		if( jump_f == true){
 			if(CheckHitKey(KEY_INPUT_UP)){
@@ -317,6 +428,14 @@ void DrawGameMain(){
 		}
 	}
 
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x=2050;
+		y=150;
+		vx=0;
+		vy=0;
+		scr_x=0;
+		scr_y=0;
+	}
 	jump_f = false;
 
 	if(x+vx < 0 ){
@@ -362,6 +481,11 @@ void DrawGameMain(){
 			vy=0;
 		}
 	}
+	if(CheckHitKey(KEY_INPUT_LEFT)){
+	     DrawGraph(x-scr_x,y,g_personl,true);
+	}else{
+		DrawGraph(x-scr_x,y,g_person,true);
+	}
 		
 		if(x>350&&scr_f==false){
 		scr_x=x-350;
@@ -393,9 +517,10 @@ void DrawGameMain(){
 	}
 	
 	
-	DrawGraph(goal_x-scr_x,goal_y,g_goal,true);
-	DrawGraph(x-scr_x,y,g_person,true);	
-	DrawBox(x-scr_x,y,x+jiki_X-scr_x,y+jiki_Y,WHITE,false);
+	DrawGraph(goal_x-scr_x,goal_y-scr_y,g_goal,true);
+	/*DrawGraph(x-scr_x,y,g_personl,true);
+	DrawGraph(x-scr_x,y,g_person,true);	*/
+	/*DrawBox(x-scr_x,y,x+jiki_X-scr_x,y+jiki_Y,WHITE,false);*/
 	DrawFormatString(700,0,RED,"x:%d",x);
 	DrawFormatString(700,20,RED,"y:%d",y);
 	if(CheckHitKey(KEY_INPUT_BACK)){
@@ -410,7 +535,7 @@ void DrawGameMain(){
 };
 ///sta2
 void DrawGameMain1(){
-	DrawGraph(0,0,g_haikei,true);
+	DrawBox(0,0,10000,10000,YELLOW,true);
 	flag2 = false;
 	
 
@@ -431,6 +556,14 @@ void DrawGameMain1(){
 			}
 		}
 	}
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x2=1800;
+		y2=40;
+		vx2=0;
+		vy2=0;
+		scr_x2=0;
+		scr_y2=0;
+	}
 
 	jump_f2 = false;
 
@@ -443,8 +576,8 @@ void DrawGameMain1(){
 	if(y2+vy2 > 600){
 		vy2=0;
 		vx2=0;
-		x2=2100;
-		y2=400;
+		x2=1800;
+		y2=45;
 		scr_x2=0;
 	}
 	
@@ -474,7 +607,12 @@ void DrawGameMain1(){
 			vy2=0;
 		}
 	}
-		
+
+	if(CheckHitKey(KEY_INPUT_LEFT)){
+	     DrawGraph(x2-scr_x2,y2,g_personl,true);
+	}else{
+		DrawGraph(x2-scr_x2,y2,g_person,true);
+	}	
 		if(x2>350&&scr_f2==false){
 		scr_x2=x2-350;
 		scr_f2=true;
@@ -506,8 +644,8 @@ void DrawGameMain1(){
 	
 	
 	DrawGraph(goal_x2-scr_x2,goal_y2,g_goal,true);
-	DrawGraph(x2-scr_x2,y2,g_person,true);	
-	DrawBox(x2-scr_x2,y2,x2+jiki_X2-scr_x2,y2+jiki_Y2,WHITE,false);
+	/*DrawGraph(x2-scr_x2,y2,g_person,true);*/	
+	/*DrawBox(x2-scr_x2,y2,x2+jiki_X2-scr_x2,y2+jiki_Y2,WHITE,false);*/
 	DrawFormatString(700,0,RED,"x:%d",x2);
 	DrawFormatString(700,20,RED,"y:%d",y2);
 	if(CheckHitKey(KEY_INPUT_BACK)){
@@ -522,7 +660,7 @@ void DrawGameMain1(){
 };
 //sta3
 void DrawGameMain2(){
-	DrawGraph(0,0,g_haikei,true);
+	DrawBox(0,0,10000,10000,WHITE,true);
 
 	flag3 = false;
 
@@ -540,6 +678,14 @@ void DrawGameMain2(){
 			}
 		}
 	}
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x3=815;
+		y3=1155;
+		vx3=0;
+		vy3=0;
+		scr_x3=0;
+		scr_y3=0;
+	}
 
 	jump_f3 = false;
 
@@ -551,24 +697,85 @@ void DrawGameMain2(){
 	
 	if(y3+vy3 > 1300){
 		vy3=0;
-		x3=200;
+		x3=815;
 		vx3=0;
-		y3=150;
+		y3=1155;
 		scr_x3=0;
-		scr_y3=0;
+		scr_y3=0; 
 	}
 	
 	
-	//if(690<x3+vx3<740 && y=1005){}
-	
-
-
-	
-	for(int i2=0;i2<54;i2++){
+	if(x3+vx3>690&&x3+vx3<740){
+		if(y3+vy3==1005){
+			x3=820;
+			y3=795;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>630&&x3+vx3<680){
+		if(y3+vy3==1020){
+			x3=0;
+			y3=1000;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>720&&x3+vx3<=790){
+		if(y3+vy3==810){
+			x3=0;
+			y3=1000;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>650&&x3+vx3<700){
+		if(y3+vy3==765){
+			x3=450;
+			y3=520;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>=700&&x3+vx3<740){
+		if(y3+vy3==795){
+			x3=435;
+			y3=345;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>850&&x3+vx3<=900){
+		if(y3+vy3==1125){
+			x3=0;
+			y3=1000;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	if(x3+vx3>570&&x3+vx3<=620){
+		if(y3+vy3==735){
+			x3=500;
+			y3=400;
+			vx3=0;
+			vy3=0;
+			scr_x3=0;
+			scr_y3=0;
+		}}
+	for(int i2=0;i2<72;i2++){
 		for(int j2=0;j2<86;j2++){
 			if(masucolor3[i2][j2]==BLACK){
 			Collision3(i2*20,j2*15,20,15);
 			DrawBox(i2*20-scr_x3,j2*15-scr_y3,i2*20+20-scr_x3,j2*15+15-scr_y3,BLACK,true);
+			}
+			if(masucolor3[i2][j2]==WHITE){
+			DrawBox(i2*20-scr_x3,j2*15-scr_y3,i2*20+20-scr_x3,j2*15+15-scr_y3,WHITE,true);
 			}
 			if(masucolor3[i2][j2]==RED){
 			Collision3(i2*20,j2*15,20,15);
@@ -588,6 +795,11 @@ void DrawGameMain2(){
 		if(vy3!=0){
 			vy3=0;
 		}
+	}
+	if(CheckHitKey(KEY_INPUT_LEFT)){
+	     DrawGraph(x3-scr_x3,y3-scr_y3,g_personl,true);
+	}else{
+		DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);
 	}
 		
 	if(x3>350&&scr_fx3==false){
@@ -617,8 +829,10 @@ void DrawGameMain2(){
 	
 	
 	if(x3 >= goal_x3 -30 && y3 >= goal_y3 -60  && x3 <= goal_x3 +30 && y3 <= goal_y3 + 60){
-		x3=2050;
-		y3=150;
+		x3=815;
+		y3=1155;
+		vx3=0;
+		vy3=0;
 		scr_x3=0;
 		scr_y3=0;
 		flag3= true;
@@ -627,7 +841,7 @@ void DrawGameMain2(){
 
 		GoGameClear();
 	}
-		if(CheckHitKey(KEY_INPUT_RETURN)){
+		if(CheckHitKey(KEY_INPUT_BACK)){
 		GoGameSelect();
 		}
 		flag3 = false;
@@ -635,21 +849,323 @@ void DrawGameMain2(){
 	
 	
 	DrawGraph(goal_x3-scr_x3,goal_y3-scr_y3,g_goal,true);
-	DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);	
-	DrawBox(x3-scr_x3,y3-scr_y3,x3+jiki_X3-scr_x3,y3+jiki_Y3-scr_y3,WHITE,false);
+	/*DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);*/	
+	/*DrawBox(x3-scr_x3,y3-scr_y3,x3+jiki_X3-scr_x3,y3+jiki_Y3-scr_y3,WHITE,false);*/
 	DrawFormatString(700,0,RED,"x:%d",x3);
 	DrawFormatString(700,20,RED,"y:%d",y3);
 	if(CheckHitKey(KEY_INPUT_BACK)){
-		x3=540;
-		y3=220;
-
+		x3=815;
+		y3=1155;
+		scr_x3=0;
+		scr_y3=0;
 		vx3=0;
 		vy3=0;
 		GoGameSelect();
 	}
 
 };
+//sta4
+void DrawGameMain3(){
+	DrawBox(0,0,10000,10000,GREEN,true);
 
+	flag4 = false;
+
+	if(flag4 == false){
+		if(CheckHitKey(KEY_INPUT_RIGHT)){
+			vx4 += 5;
+		}
+		if(CheckHitKey(KEY_INPUT_LEFT)){
+			vx4-= 5;
+		}
+		if( jump_f4 == true){
+			if(CheckHitKey(KEY_INPUT_UP)){
+				vy4 -=14;
+				jump_f4 = false;
+			}
+		}
+	}
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x4=1800;
+		y4=450;
+		vx4=0;
+		vy4=0;
+		scr_x4=0;
+		scr_y4=0;
+	}
+
+	jump_f4 = false;
+
+	if(x4+vx4 < 0 ){
+		vx4=0;
+		x4=0;
+	}
+	
+	
+	if(y4+vy4 > 10000){
+		vy4=0;
+		x4=1800;
+		vx4=0;
+		y4=450;
+		scr_x4=0;
+		scr_y4=0; 
+	}
+	
+	//1
+	if(x4+vx4>1910&&x4+vx4<=1930){
+		if(y4+vy4==465){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//2
+	if(x4+vx4>1670&&x4+vx4<1720){
+		if(y4+vy4==465){
+			x4=3320;
+			y4=3000;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//3
+	if(x4+vx4>3230&&x4+vx4<3280){
+		if(y4+vy4==2985){
+			x4=2200;
+			y4=1580;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//4
+	if(x4+vx4>2170&&x4+vx4<2220){
+		if(y4+vy4==1410){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//5
+	if(x4+vx4>2090&&x4+vx4<2140){
+		if(y4+vy4==1200){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//6
+	if(x4+vx4>1990&&x4+vx4<2040){
+		if(y4+vy4==1035){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//7
+	if(x4+vx4>1830&&x4+vx4<1880){
+		if(y4+vy4==1095){
+			x4=1200;
+			y4=1050;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//8
+	if(x4+vx4>1910&&x4+vx4<1960){
+		if(y4+vy4==1275){
+			x4=2000;
+			y4=900;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//9
+	if(x4+vx4>1990&&x4+vx4<2040){
+		if(y4+vy4==1500){
+			x4=400;
+			y4=1500;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+		//10
+		if(x4+vx4>1930&&x4+vx4<1980){
+		if(y4+vy4==1680){
+			x4=1540;
+			y4=2910;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+		//12
+	if(x4+vx4>1970&&x4+vx4<2020){
+		if(y4+vy4==690){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//13
+	if(x4+vx4>790&&x4+vx4<810){
+		if(y4+vy4==1290){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//18
+	if(x4+vx4>2310&&x4+vx4<2360){
+		if(y4+vy4==570){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//19
+	if(x4+vx4>2600&&x4+vx4<2620){
+		if(y4+vy4==1005){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//22
+	if(x4+vx4>2850&&x4+vx4<2900){
+		if(y4+vy4==2880){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//23
+	if(x4+vx4>1050&&x4+vx4<1100){
+		if(y4+vy4==345){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+
+
+
+	for(int i3=0;i3<962;i3++){
+		for(int j3=0;j3<1150;j3++){
+			if(masucolor4[i3][j3]==BLACK){
+			Collision4(i3*20,j3*15,20,15);
+			DrawBox(i3*20-scr_x4,j3*15-scr_y4,i3*20+20-scr_x4,j3*15+15-scr_y4,BLACK,true);
+			}
+			if(masucolor4[i3][j3]==RED){
+			Collision4(i3*20,j3*15,20,15);
+			DrawBox(i3*20-scr_x4,j3*15-scr_y4,i3*20+20-scr_x4,j3*15+15-scr_y4,RED,true);
+			}
+	}
+	}
+
+	x4 += vx4;
+	y4 += vy4;
+	vx4=0;
+	
+
+	if(jump_f4==false){
+		vy4+=z4;
+	}else{
+		if(vy4!=0){
+			vy4=0;
+		}
+	}
+	if(CheckHitKey(KEY_INPUT_LEFT)){
+	     DrawGraph(x4-scr_x4,y4-scr_y4,g_personl,true);
+	}else{
+		DrawGraph(x4-scr_x4,y4-scr_y4,g_person,true);
+	}
+		
+	if(x4>350&&scr_fx4==false){
+		scr_x4=x4-350;
+		scr_fx4=true;
+	}
+	if(x4<=350){
+	scr_fx4=false;
+	}
+	if(scr_fx4==true){
+		scr_x4=x4-350;
+		scr_fx4=true;
+	} 
+
+		
+	if(y4>300&&scr_fy4==false){
+		scr_y4=y4-300;
+		scr_fy4=true;
+	}
+	if(y4<=300){
+	scr_fy4=false;
+	}
+	if(scr_fy4==true){
+	scr_y4=y4-300;
+	scr_fy4=true;
+	}
+	
+	
+	if(x4 >= goal_x4 -30 && y4 >= goal_y4 -60  && x4 <= goal_x4 +30 && y4 <= goal_y4 + 60){
+		x4=1800;
+		y4=450;
+		vx4=0;
+		vy4=0;
+		scr_x4=0;
+		scr_y4=0;
+		flag4= true;
+	}
+	if(flag4 ==true){
+
+		GoGameClear();
+	}
+		if(CheckHitKey(KEY_INPUT_BACK)){
+		GoGameSelect();
+		}
+		flag4 = false;
+	
+	
+	
+	DrawGraph(goal_x4-scr_x4,goal_y4-scr_y4,g_goal,true);
+	/*DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);*/	
+	DrawBox(x4-vx4-scr_x4,y4-vy4-scr_y4,x4+jiki_X4-vx4-scr_x4,y4+jiki_Y4-vy4-scr_y4,WHITE,false);
+	DrawFormatString(700,0,RED,"x:%d",x4);
+	DrawFormatString(700,20,RED,"y:%d",y4);
+	if(CheckHitKey(KEY_INPUT_BACK)){
+		x4=1800;
+		y4=450;
+		scr_x4=0;
+		scr_y4=0;
+		vx4=0;
+		vy4=0;
+		GoGameSelect();
+	}
+
+};
 void GoGameTitle(){
 	
 	Game.RemoveChild();
@@ -661,7 +1177,11 @@ void GoGameMain(){
 	Game.RemoveChild();
 	Game.AddChild(&MAIN);
 }
-
+void GoSta1ex(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAINEX);
+}
 void GoGameSelect(){
 	
 	Game.RemoveChild();
@@ -673,15 +1193,38 @@ void GoGameMain1(){
 	Game.RemoveChild();
 	Game.AddChild(&MAIN1);
 }
+void GoSta2ex(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAIN1EX);
+}
 void GoGameMain2(){
 	
 	Game.RemoveChild();
 	Game.AddChild(&MAIN2);
 }
-
-
+void GoSta3ex(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAIN2EX);
+}
+void GoGameMain3(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAIN3);
+}
+void GoSta4ex(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&MAIN3EX);
+}
 void GoGameClear(){
 	
 	Game.RemoveChild();
 	Game.AddChild(&CLEAR);
+}
+void GoAsobi(){
+	
+	Game.RemoveChild();
+	Game.AddChild(&ASOBI);
 }
