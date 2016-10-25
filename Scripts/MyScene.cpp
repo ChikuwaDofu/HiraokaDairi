@@ -41,6 +41,8 @@ int g_3ex;
 int g_4ex;
 int g_asobikata;
 int g_haikei;
+int m_die;
+int m_clear;
 
 int g_stage[4];
 int masucolor[150][40];
@@ -66,7 +68,7 @@ void AwakeScene()
 	CLEAR.input.AddEventListener(Event.EVERY_FRAME,DrawGameClear);
 	ASOBI.input.AddEventListener(Event.EVERY_FRAME,DrawAsobi);
 
-	g_title = LoadGraph("hiraokapic/Title.png",true);
+	g_title = LoadGraph("hiraokapic/ai.png",true);
 
 	g_hake = LoadGraph("hiraokapic/Mesa.png",true);
 
@@ -93,8 +95,8 @@ void AwakeScene()
 	g_4ex = LoadGraph("hiraokapic/gorilla.png",true);
 	g_asobikata=LoadGraph("hiraokapic/asobikata.png",true);
 	g_haikei = LoadGraph("hiraokapic/ushiro.png",true);
-
-
+	m_die = LoadSoundMem("hiraokapic/die.wav",true);
+	m_clear = LoadSoundMem("hiraokapic/clear.wav",true);
 	g_stage[1] =LoadSoftImage("hiraokapic/Sta1.png"); 
 	int r,g,b;
 	for(int i=0;i<150;i++){
@@ -227,8 +229,8 @@ int vx3=0;
 int vy3=0;
 int z3=1;
 
-int goal_x4=140;
-int goal_y4=390;
+int goal_x4=1400;
+int goal_y4=225;
 const int jiki_X4= 30;
 const int jiki_Y4 = 60;
 int scr_x4 = 0;
@@ -505,6 +507,7 @@ void DrawGameMain(){
 		y=150;
 		scr_x=0;
 		flag = true;
+		PlaySoundMem(m_clear,DX_PLAYTYPE_BACK,true);
 	}
 	if(flag ==true){
 
@@ -627,10 +630,11 @@ void DrawGameMain1(){
 	
 	
 	if(x2 >= goal_x2 -30 && y2 >= goal_y2 -60  && x2 <= goal_x2+30 && y2 <= goal_y2 + 60){
-		x2=10000;
-		y2=150;
+		x2=1800;
+		y2=40;
 		scr_x2=0;
 		flag2 = true;
+		PlaySoundMem(m_clear,DX_PLAYTYPE_BACK,true);
 	}
 	if(flag2 ==true){
 
@@ -649,8 +653,8 @@ void DrawGameMain1(){
 	DrawFormatString(700,0,RED,"x:%d",x2);
 	DrawFormatString(700,20,RED,"y:%d",y2);
 	if(CheckHitKey(KEY_INPUT_BACK)){
-		x2=385;
-		y2=540;
+		x2=1800;
+		y2=40;
 
 		vx2=0;
 		vy2=0;
@@ -836,6 +840,7 @@ void DrawGameMain2(){
 		scr_x3=0;
 		scr_y3=0;
 		flag3= true;
+		PlaySoundMem(m_clear,DX_PLAYTYPE_BACK,true);
 	}
 	if(flag3 ==true){
 
@@ -901,13 +906,14 @@ void DrawGameMain3(){
 	}
 	
 	
-	if(y4+vy4 > 10000){
+	if(y4+vy4 > 5000){
 		vy4=0;
 		x4=1800;
 		vx4=0;
 		y4=450;
 		scr_x4=0;
 		scr_y4=0; 
+		PlaySoundMem(m_die,DX_PLAYTYPE_BACK,true);
 	}
 	
 	//1
@@ -973,7 +979,7 @@ void DrawGameMain3(){
 	//7
 	if(x4+vx4>1830&&x4+vx4<1880){
 		if(y4+vy4==1095){
-			x4=1200;
+			x4=1300;
 			y4=1050;
 			vx4=0;
 			vy4=0;
@@ -1010,6 +1016,16 @@ void DrawGameMain3(){
 			scr_x4=0;
 			scr_y4=0;
 		}}
+      //11
+		if(x4+vx4>1370&&x4+vx4<1420){
+		if(y4+vy4==855){
+			x4=1800;
+			y4=450;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
 		//12
 	if(x4+vx4>1970&&x4+vx4<2020){
 		if(y4+vy4==690){
@@ -1030,6 +1046,46 @@ void DrawGameMain3(){
 			scr_x4=0;
 			scr_y4=0;
 		}}
+	//14
+	if(x4+vx4>410&&x4+vx4<460){
+		if(y4+vy4==660){
+			x4=1880;
+			y4=1950;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//15
+	if(x4+vx4>110&&x4+vx4<160){
+		if(y4+vy4==1440){
+			x4=600;
+			y4=450;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//16
+	if(x4+vx4>1630&&x4+vx4<1680){
+		if(y4+vy4==2955){
+			x4=2380;
+			y4=405;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//17
+	if(x4+vx4>770&&x4+vx4<820){
+		if(y4+vy4==360){
+			x4=3060;
+			y4=1050;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
 	//18
 	if(x4+vx4>2310&&x4+vx4<2360){
 		if(y4+vy4==570){
@@ -1040,9 +1096,39 @@ void DrawGameMain3(){
 			scr_x4=0;
 			scr_y4=0;
 		}}
+	//18a
+	if(x4+vx4>2330&&x4+vx4<2380){
+		if(y4+vy4==750){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
 	//19
-	if(x4+vx4>2600&&x4+vx4<2620){
+	if(x4+vx4>=2600&&x4+vx4<2620){
 		if(y4+vy4==1005){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//20
+	if(x4+vx4>3490&&x4+vx4<3540){
+		if(y4+vy4==705){
+			x4=3320;
+			y4=3000;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//21
+	if(x4+vx4>2230&&x4+vx4<2280){
+		if(y4+vy4==2235){
 			x4=1900;
 			y4=2250;
 			vx4=0;
@@ -1053,8 +1139,8 @@ void DrawGameMain3(){
 	//22
 	if(x4+vx4>2850&&x4+vx4<2900){
 		if(y4+vy4==2880){
-			x4=1900;
-			y4=2250;
+			x4=1200;
+			y4=160;
 			vx4=0;
 			vy4=0;
 			scr_x4=0;
@@ -1070,6 +1156,26 @@ void DrawGameMain3(){
 			scr_x4=0;
 			scr_y4=0;
 		}}
+	//24
+	if(x4+vx4>1310&&x4+vx4<1360){
+		if(y4+vy4==495){
+			x4=1660;
+			y4=120;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
+	//25
+	if(x4+vx4>1470&&x4+vx4<1520){
+		if(y4+vy4==2700){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+		}}
 
 
 
@@ -1078,6 +1184,9 @@ void DrawGameMain3(){
 			if(masucolor4[i3][j3]==BLACK){
 			Collision4(i3*20,j3*15,20,15);
 			DrawBox(i3*20-scr_x4,j3*15-scr_y4,i3*20+20-scr_x4,j3*15+15-scr_y4,BLACK,true);
+			}
+			if(masucolor4[i3][j3]==YELLOW){
+			DrawBox(i3*20-scr_x4,j3*15-scr_y4,i3*20+20-scr_x4,j3*15+15-scr_y4,YELLOW,true);
 			}
 			if(masucolor4[i3][j3]==RED){
 			Collision4(i3*20,j3*15,20,15);
@@ -1138,6 +1247,7 @@ void DrawGameMain3(){
 		scr_x4=0;
 		scr_y4=0;
 		flag4= true;
+		PlaySoundMem(m_clear,DX_PLAYTYPE_BACK,true);
 	}
 	if(flag4 ==true){
 
@@ -1152,7 +1262,7 @@ void DrawGameMain3(){
 	
 	DrawGraph(goal_x4-scr_x4,goal_y4-scr_y4,g_goal,true);
 	/*DrawGraph(x3-scr_x3,y3-scr_y3,g_person,true);*/	
-	DrawBox(x4-vx4-scr_x4,y4-vy4-scr_y4,x4+jiki_X4-vx4-scr_x4,y4+jiki_Y4-vy4-scr_y4,WHITE,false);
+	/*DrawBox(x4-vx4-scr_x4,y4-vy4-scr_y4,x4+jiki_X4,y4+jiki_Y4-vy4-scr_y4,WHITE,false);*/
 	DrawFormatString(700,0,RED,"x:%d",x4);
 	DrawFormatString(700,20,RED,"y:%d",y4);
 	if(CheckHitKey(KEY_INPUT_BACK)){
