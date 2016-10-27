@@ -241,6 +241,7 @@ int vx4=0;
 int vy4=0;
 int z4=1;
 
+//“–‚½‚è”»’è
 void Collision(int _box_x,int _box_y,int _box_w,int _box_h){
 
 		if(x+vx+jiki_X>_box_x && x+vx<_box_x+_box_w && y>_box_y-60 && y<_box_y+_box_h && vx>=0 ){
@@ -254,13 +255,13 @@ void Collision(int _box_x,int _box_y,int _box_w,int _box_h){
 			vx=0;
 			}
 
-	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy>=_box_y-60 && y<_box_y+_box_h && vy>0){
+	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy>=_box_y-60 && y+vy<_box_y+_box_h && vy>=0){
 			y = _box_y - jiki_Y;
 			vy=0;
 			jump_f=true;
 		}
 
-	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy<=_box_y+_box_h && y>_box_y-60 && vy<0){
+	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy<=_box_y+_box_h && y+vy>_box_y-60 && vy<=0){
 			y = _box_y + _box_h;
 			vy =0;
 		}
@@ -282,13 +283,13 @@ void Collision2(int _box_x,int _box_y,int _box_w,int _box_h){
 			vx2=0;
 			}
 
-	if(x2+vx2>_box_x-30 && x2+vx2<_box_x+_box_w && y2+vy2>=_box_y-60 && y2<_box_y+_box_h && vy2>0){
+	if(x2+vx2>_box_x-30 && x2+vx2<_box_x+_box_w && y2+vy2>=_box_y-60 && y2+vy2<_box_y+_box_h && vy2>=0){
 			y2 = _box_y - jiki_Y;
 			vy2=0;
 			jump_f2=true;
 		}
 
-	if(x2+vx2>_box_x-30 && x2+vx2<_box_x+_box_w && y2+vy2<=_box_y+_box_h && y2>_box_y-60 && vy2<0){
+	if(x2+vx2>_box_x-30 && x2+vx2<_box_x+_box_w && y2+vy2<=_box_y+_box_h && y2+vy2>_box_y-60 && vy2<=0){
 			y2 = _box_y + _box_h;
 			vy2 =0;
 		}
@@ -309,13 +310,13 @@ void Collision3(int _box_x,int _box_y,int _box_w,int _box_h){
 			vx3=0;
 			}
 
-	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3>=_box_y-60 && y3<_box_y+_box_h && vy3>0){
+	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3>=_box_y-60 && y3+vy3<_box_y+_box_h && vy3>=0){
 			y3 = _box_y - jiki_Y3;
 			vy3=0;
 			jump_f3=true;
 		}
 
-	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3<=_box_y+_box_h && y3>_box_y-60 && vy3<0){
+	if(x3+vx3>_box_x-30 && x3+vx3<_box_x+_box_w && y3+vy3<=_box_y+_box_h && y3+vy3>_box_y-60 && vy3<0){
 			y3 = _box_y + _box_h;
 			vy3 =0;
 		}
@@ -336,13 +337,13 @@ void Collision4(int _box_x,int _box_y,int _box_w,int _box_h){
 			vx4=0;
 			}
 
-	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4>=_box_y-60 && y4<_box_y+_box_h && vy4>0){
+	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4>=_box_y-60 && y4+vy4<_box_y+_box_h && vy4>=0){
 			y4 = _box_y - jiki_Y4;
 			vy4=0;
 			jump_f4=true;
 		}
 
-	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4<=_box_y+_box_h && y4>_box_y-60 && vy4<0){
+	if(x4+vx4>_box_x-30 && x4+vx4<_box_x+_box_w && y4+vy4<=_box_y+_box_h && y4+vy4>_box_y-60 && vy4<=0){
 			y4 = _box_y + _box_h;
 			vy4 =0;
 		}
@@ -665,50 +666,6 @@ void DrawGameMain1(){
 //sta3
 void DrawGameMain2(){
 	DrawBox(0,0,10000,10000,WHITE,true);
-
-	flag3 = false;
-
-	if(flag3 == false){
-		if(CheckHitKey(KEY_INPUT_RIGHT)){
-			vx3 += 5;
-		}
-		if(CheckHitKey(KEY_INPUT_LEFT)){
-			vx3-= 5;
-		}
-		if( jump_f3 == true){
-			if(CheckHitKey(KEY_INPUT_UP)){
-				vy3 -=14;
-				jump_f3 = false;
-			}
-		}
-	}
-	if(CheckHitKey(KEY_INPUT_0)){
-	    x3=815;
-		y3=1155;
-		vx3=0;
-		vy3=0;
-		scr_x3=0;
-		scr_y3=0;
-	}
-
-	jump_f3 = false;
-
-	if(x3+vx3 < 0 ){
-		vx3=0;
-		x3=0;
-	}
-	
-	
-	if(y3+vy3 > 1300){
-		vy3=0;
-		x3=815;
-		vx3=0;
-		y3=1155;
-		scr_x3=0;
-		scr_y3=0; 
-	}
-	
-	
 	if(x3+vx3>690&&x3+vx3<740){
 		if(y3+vy3==1005){
 			x3=820;
@@ -772,6 +729,50 @@ void DrawGameMain2(){
 			scr_x3=0;
 			scr_y3=0;
 		}}
+	flag3 = false;
+
+	if(flag3 == false){
+		if(CheckHitKey(KEY_INPUT_RIGHT)){
+			vx3 += 5;
+		}
+		if(CheckHitKey(KEY_INPUT_LEFT)){
+			vx3-= 5;
+		}
+		if( jump_f3 == true){
+			if(CheckHitKey(KEY_INPUT_UP)){
+				vy3 -=14;
+				jump_f3 = false;
+			}
+		}
+	}
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x3=815;
+		y3=1155;
+		vx3=0;
+		vy3=0;
+		scr_x3=0;
+		scr_y3=0;
+	}
+
+	jump_f3 = false;
+
+	if(x3+vx3 < 0 ){
+		vx3=0;
+		x3=0;
+	}
+	
+	
+	if(y3+vy3 > 1300){
+		vy3=0;
+		x3=815;
+		vx3=0;
+		y3=1155;
+		scr_x3=0;
+		scr_y3=0; 
+	}
+	
+	
+	
 	for(int i2=0;i2<72;i2++){
 		for(int j2=0;j2<86;j2++){
 			if(masucolor3[i2][j2]==BLACK){
@@ -872,50 +873,6 @@ void DrawGameMain2(){
 //sta4
 void DrawGameMain3(){
 	DrawBox(0,0,10000,10000,GREEN,true);
-
-	flag4 = false;
-
-	if(flag4 == false){
-		if(CheckHitKey(KEY_INPUT_RIGHT)){
-			vx4 += 5;
-		}
-		if(CheckHitKey(KEY_INPUT_LEFT)){
-			vx4-= 5;
-		}
-		if( jump_f4 == true){
-			if(CheckHitKey(KEY_INPUT_UP)){
-				vy4 -=14;
-				jump_f4 = false;
-			}
-		}
-	}
-	if(CheckHitKey(KEY_INPUT_0)){
-	    x4=1800;
-		y4=450;
-		vx4=0;
-		vy4=0;
-		scr_x4=0;
-		scr_y4=0;
-	}
-
-	jump_f4 = false;
-
-	if(x4+vx4 < 0 ){
-		vx4=0;
-		x4=0;
-	}
-	
-	
-	if(y4+vy4 > 5000){
-		vy4=0;
-		x4=1800;
-		vx4=0;
-		y4=450;
-		scr_x4=0;
-		scr_y4=0; 
-		PlaySoundMem(m_die,DX_PLAYTYPE_BACK,true);
-	}
-	
 	//1
 	if(x4+vx4>1910&&x4+vx4<=1930){
 		if(y4+vy4==465){
@@ -1176,6 +1133,50 @@ void DrawGameMain3(){
 			scr_x4=0;
 			scr_y4=0;
 		}}
+	flag4 = false;
+
+	if(flag4 == false){
+		if(CheckHitKey(KEY_INPUT_RIGHT)){
+			vx4 += 5;
+		}
+		if(CheckHitKey(KEY_INPUT_LEFT)){
+			vx4-= 5;
+		}
+		if( jump_f4 == true){
+			if(CheckHitKey(KEY_INPUT_UP)){
+				vy4 -=14;
+				jump_f4 = false;
+			}
+		}
+	}
+	if(CheckHitKey(KEY_INPUT_0)){
+	    x4=1800;
+		y4=450;
+		vx4=0;
+		vy4=0;
+		scr_x4=0;
+		scr_y4=0;
+	}
+
+	jump_f4 = false;
+
+	if(x4+vx4 < 0 ){
+		vx4=0;
+		x4=0;
+	}
+	
+	
+	if(y4+vy4 > 5000){
+		vy4=0;
+		x4=1800;
+		vx4=0;
+		y4=450;
+		scr_x4=0;
+		scr_y4=0; 
+		PlaySoundMem(m_die,DX_PLAYTYPE_BACK,true);
+	}
+	
+	
 
 
 
