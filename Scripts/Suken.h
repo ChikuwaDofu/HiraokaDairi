@@ -1,5 +1,6 @@
 #pragma once
 #include"Manager.h"
+#define IDI_ICON1 101 
 
 #include"SukenLib\System\System.h"
 

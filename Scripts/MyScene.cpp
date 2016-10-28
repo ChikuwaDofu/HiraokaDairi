@@ -244,24 +244,24 @@ int z4=1;
 //“–‚½‚è”»’è
 void Collision(int _box_x,int _box_y,int _box_w,int _box_h){
 
-		if(x+vx+jiki_X>_box_x && x+vx<_box_x+_box_w && y>_box_y-60 && y<_box_y+_box_h && vx>=0 ){
+		if(x+vx+jiki_X>_box_x && x+vx<_box_x+_box_w && y>_box_y-jiki_Y && y<_box_y+_box_h && vx>=0 ){
 		
 		x=_box_x-jiki_X;
 		vx=0;
 		}
 
-		if(x+vx+jiki_X>_box_x+_box_w &&x+vx<_box_w+_box_x  && y>_box_y-60 && y<_box_y+_box_h  && vx<=0){
+		if(x+vx+jiki_X>_box_x+_box_w &&x+vx<_box_w+_box_x  && y>_box_y-jiki_Y && y<_box_y+_box_h  && vx<=0){
 			x = _box_x + _box_w;
 			vx=0;
 			}
 
-	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy>=_box_y-60 && y+vy<_box_y+_box_h && vy>=0){
+	if(x>_box_x-jiki_X && x<_box_x+_box_w && y+vy>=_box_y-jiki_Y && y+vy<_box_y+_box_h && vy>=0){
 			y = _box_y - jiki_Y;
 			vy=0;
 			jump_f=true;
 		}
 
-	if(x+vx>_box_x-30 && x+vx<_box_x+_box_w && y+vy<=_box_y+_box_h && y+vy>_box_y-60 && vy<=0){
+	if(x>_box_x-jiki_X && x<_box_x+_box_w && y+vy<=_box_y+_box_h && y+vy>_box_y-jiki_Y && vy<=0){
 			y = _box_y + _box_h;
 			vy =0;
 		}
@@ -436,8 +436,7 @@ void DrawGameMain(){
 		y=150;
 		vx=0;
 		vy=0;
-		scr_x=0;
-		scr_y=0;
+		
 	}
 	jump_f = false;
 
@@ -528,8 +527,8 @@ void DrawGameMain(){
 	DrawFormatString(700,0,RED,"x:%d",x);
 	DrawFormatString(700,20,RED,"y:%d",y);
 	if(CheckHitKey(KEY_INPUT_BACK)){
-		x=385;
-		y=540;
+		x=2050;
+		y=150;
 
 		vx=0;
 		vy=0;
@@ -565,8 +564,7 @@ void DrawGameMain1(){
 		y2=40;
 		vx2=0;
 		vy2=0;
-		scr_x2=0;
-		scr_y2=0;
+		
 	}
 
 	jump_f2 = false;
@@ -666,6 +664,7 @@ void DrawGameMain1(){
 //sta3
 void DrawGameMain2(){
 	DrawBox(0,0,10000,10000,WHITE,true);
+	//ƒ[ƒv
 	if(x3+vx3>690&&x3+vx3<740){
 		if(y3+vy3==1005){
 			x3=820;
@@ -674,6 +673,7 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	if(x3+vx3>630&&x3+vx3<680){
 		if(y3+vy3==1020){
@@ -683,6 +683,7 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	if(x3+vx3>720&&x3+vx3<=790){
 		if(y3+vy3==810){
@@ -692,6 +693,7 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	if(x3+vx3>650&&x3+vx3<700){
 		if(y3+vy3==765){
@@ -701,15 +703,16 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	if(x3+vx3>=700&&x3+vx3<740){
 		if(y3+vy3==795){
-			x3=435;
+			x3=440;
 			y3=345;
 			vx3=0;
 			vy3=0;
-			scr_x3=0;
-			scr_y3=0;
+			
+			jump_f3=false;
 		}}
 	if(x3+vx3>850&&x3+vx3<=900){
 		if(y3+vy3==1125){
@@ -719,6 +722,7 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	if(x3+vx3>570&&x3+vx3<=620){
 		if(y3+vy3==735){
@@ -728,6 +732,7 @@ void DrawGameMain2(){
 			vy3=0;
 			scr_x3=0;
 			scr_y3=0;
+			jump_f3=false;
 		}}
 	flag3 = false;
 
@@ -750,8 +755,7 @@ void DrawGameMain2(){
 		y3=1155;
 		vx3=0;
 		vy3=0;
-		scr_x3=0;
-		scr_y3=0;
+		
 	}
 
 	jump_f3 = false;
@@ -767,8 +771,7 @@ void DrawGameMain2(){
 		x3=815;
 		vx3=0;
 		y3=1155;
-		scr_x3=0;
-		scr_y3=0; 
+		
 	}
 	
 	
@@ -882,6 +885,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//2
 	if(x4+vx4>1670&&x4+vx4<1720){
@@ -892,6 +896,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//3
 	if(x4+vx4>3230&&x4+vx4<3280){
@@ -902,6 +907,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//4
 	if(x4+vx4>2170&&x4+vx4<2220){
@@ -912,6 +918,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//5
 	if(x4+vx4>2090&&x4+vx4<2140){
@@ -922,6 +929,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//6
 	if(x4+vx4>1990&&x4+vx4<2040){
@@ -932,6 +940,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+	jump_f4=false;
 		}}
 	//7
 	if(x4+vx4>1830&&x4+vx4<1880){
@@ -942,6 +951,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//8
 	if(x4+vx4>1910&&x4+vx4<1960){
@@ -952,6 +962,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//9
 	if(x4+vx4>1990&&x4+vx4<2040){
@@ -962,6 +973,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 		//10
 		if(x4+vx4>1930&&x4+vx4<1980){
@@ -972,6 +984,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
       //11
 		if(x4+vx4>1370&&x4+vx4<1420){
@@ -979,9 +992,10 @@ void DrawGameMain3(){
 			x4=1800;
 			y4=450;
 			vx4=0;
-			vy4=0;
-			scr_x4=0;
+            scr_x4=0;
 			scr_y4=0;
+			vy4=0;
+			jump_f4=false;
 		}}
 		//12
 	if(x4+vx4>1970&&x4+vx4<2020){
@@ -992,6 +1006,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//13
 	if(x4+vx4>790&&x4+vx4<810){
@@ -1002,6 +1017,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+		jump_f4=false;
 		}}
 	//14
 	if(x4+vx4>410&&x4+vx4<460){
@@ -1012,6 +1028,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//15
 	if(x4+vx4>110&&x4+vx4<160){
@@ -1022,6 +1039,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//16
 	if(x4+vx4>1630&&x4+vx4<1680){
@@ -1032,6 +1050,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//17
 	if(x4+vx4>770&&x4+vx4<820){
@@ -1042,6 +1061,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//18
 	if(x4+vx4>2310&&x4+vx4<2360){
@@ -1052,6 +1072,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//18a
 	if(x4+vx4>2330&&x4+vx4<2380){
@@ -1062,6 +1083,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//19
 	if(x4+vx4>=2600&&x4+vx4<2620){
@@ -1072,6 +1094,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//20
 	if(x4+vx4>3490&&x4+vx4<3540){
@@ -1082,6 +1105,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//21
 	if(x4+vx4>2230&&x4+vx4<2280){
@@ -1092,6 +1116,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//22
 	if(x4+vx4>2850&&x4+vx4<2900){
@@ -1102,6 +1127,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//23
 	if(x4+vx4>1050&&x4+vx4<1100){
@@ -1112,6 +1138,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//24
 	if(x4+vx4>1310&&x4+vx4<1360){
@@ -1122,6 +1149,7 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
 		}}
 	//25
 	if(x4+vx4>1470&&x4+vx4<1520){
@@ -1132,6 +1160,18 @@ void DrawGameMain3(){
 			vy4=0;
 			scr_x4=0;
 			scr_y4=0;
+			jump_f4=false;
+		}}
+	//26
+	if(x4+vx4>830&&x4+vx4<880){
+		if(y4+vy4==780){
+			x4=1900;
+			y4=2250;
+			vx4=0;
+			vy4=0;
+			scr_x4=0;
+			scr_y4=0;
+			jump_f4=false;
 		}}
 	flag4 = false;
 
@@ -1154,8 +1194,7 @@ void DrawGameMain3(){
 		y4=450;
 		vx4=0;
 		vy4=0;
-		scr_x4=0;
-		scr_y4=0;
+		
 	}
 
 	jump_f4 = false;
